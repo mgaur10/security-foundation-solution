@@ -770,7 +770,7 @@ resource "google_compute_instance" "kubernetes_proxy_server1" {
     email                       = google_service_account.k8_ser_acc.email
     scopes                      = ["cloud-platform"]
   }
-    metadata_startup_script     = "sudo apt-get update -y;sudo apt-get install git -y;sudo apt-get install kubectl;sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin;git clone https://github.com/mgaur10/security-foundation-bundle-.git;sudo gcloud container clusters get-credentials ${local.cluster_name} --zone=us-east1 --project=${var.demo_project_id}${var.appmodtag}${var.random_string};sudo kubectl apply -f /security-foundation-bundle-/appmod-module/release/kubernetes-manifests.yaml;"
+    metadata_startup_script     = "sudo apt-get update -y;sudo apt-get install git -y;sudo apt-get install kubectl;sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin;git clone https://github.com/mgaur10/security-foundation-solution.git;sudo gcloud container clusters get-credentials ${local.cluster_name} --zone=us-east1 --project=${var.demo_project_id}${var.appmodtag}${var.random_string};sudo kubectl apply -f /security-foundation-solution/appmod-module/release/kubernetes-manifests.yaml;"
     
 
     labels =   {

@@ -1,0 +1,9 @@
+#!/bin/sh
+apt-get update
+# Workaround https://github.com/hashicorp/terraform-provider-google/issues/6782
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1 net.ipv6.conf.default.disable_ipv6=1 net.ipv6.conf.lo.disable_ipv6=1 > /dev/null
+export APIS="artifactregistry.googleapis.com accesscontextmanager.googleapis.com bigquery.googleapis.com binaryauthorization.googleapis.com ids.googleapis.com cloudapis.googleapis.com cloudbuild.googleapis.com clouddebugger.googleapis.com cloudfunctions.googleapis.com cloudkms.googleapis.com cloudprofiler.googleapis.com cloudtrace.googleapis.com compute.googleapis.com container.googleapis.com containeranalysis.googleapis.com containerscanning.googleapis.com containersecurity.googleapis.com dlp.googleapis.com iam.googleapis.com iap.googleapis.com logging.googleapis.com monitoring.googleapis.com osconfig.googleapis.com pubsub.googleapis.com redis.googleapis.com run.googleapis.com secretmanager.googleapis.com servicenetworking.googleapis.com sql-component.googleapis.com sqladmin.googleapis.com storage.googleapis.com vpcaccess.googleapis.com pkg.dev gcr.io"
+for i in $APIS
+do
+  echo "199.36.153.10 $i" >> /etc/hosts
+done

@@ -136,6 +136,7 @@ resource "google_storage_bucket" "application" {
   force_destroy = true
   project       = google_project.dlp_project.project_id
   uniform_bucket_level_access = true
+  depends_on = [data.archive_file.source]
 }
 
 # Add zip file to the Cloud Function's source code bucket
@@ -143,6 +144,7 @@ resource "google_storage_bucket_object" "python_code" {
   name   = "dlpfunction.zip"
   bucket = google_storage_bucket.application.name
   source = "${path.module}/dlpfunction.zip"
+  depends_on = [google_storage_bucket.application]
 }
 
 #Creating the pubsub topic
@@ -156,6 +158,7 @@ resource "google_pubsub_subscription" "pubsub_subscription" {
   name  = var.pubsub_subscription_name
   project = google_project.dlp_project.project_id
   topic = google_pubsub_topic.pubsub_topic.name
+  depends_on = [google_pubsub_topic.pubsub_topic]
   
 }
 
@@ -179,7 +182,10 @@ resource "google_cloudfunctions_function" "create_DLP_job" {
         resource   = "${var.qa_storage_bucket_name}${var.random_string}"  # quarantine bucket where files are uploaded for processing
     }
 
-  depends_on = [time_sleep.wait_120_seconds_enable_service_api_dlp]
+  depends_on = [
+      time_sleep.wait_120_seconds_enable_service_api_dlp,
+      google_storage_bucket_object.python_code,
+      ]
 
   environment_variables = {
     PROJ_ID      = google_project.dlp_project.project_id
@@ -209,8 +215,11 @@ resource "google_cloudfunctions_function" "resolve_DLP" {
         resource   = "projects/${var.demo_project_id}${var.dlptag}${var.vpcsctag}${var.random_string}/topics/${var.pubsub_topic_name}"   
     }
   
-  depends_on = [time_sleep.wait_120_seconds_enable_service_api_dlp]
-
+  depends_on = [
+      time_sleep.wait_120_seconds_enable_service_api_dlp,
+      google_storage_bucket_object.python_code,
+      ]
+      
   environment_variables = {
    PROJ_ID      = google_project.dlp_project.project_id
     QA_BUCKET    = google_storage_bucket.cloud_qa_storage_bucket_name.name
@@ -386,7 +395,7 @@ resource "google_access_context_manager_service_perimeter" "service-perimeter" {
 #   }
   status {
     restricted_services = [
-    #    "bigquery.googleapis.com",
+#        "bigquery.googleapis.com",
         "compute.googleapis.com",
         ]
     resources = ["projects/${google_project.dlp_project.number}"]

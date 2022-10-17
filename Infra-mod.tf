@@ -76,100 +76,6 @@ resource "google_project" "demo_project" {
   ]
 }
 
-/* 
-# Enable the Individual APIs
-resource "google_project_service" "demo_api_services1" {
-  service = "containeranalysis.googleapis.com"
-  project            = google_project.demo_project.project_id
-  disable_on_destroy = true
-  disable_dependent_services = true
-  depends_on = [google_project.demo_project]
-  }
-
-# Enable the Individual APIs
-resource "google_project_service" "demo_api_services2" {
-  service = "compute.googleapis.com"
-  project            = google_project.demo_project.project_id
-  disable_on_destroy = true
-  disable_dependent_services = true
-   depends_on = [google_project_service.demo_api_services1]
-  }
-
-
-  # Enable the Individual APIs
-resource "google_project_service" "demo_api_services3" {
-  service = "redis.googleapis.com"
-  project            = google_project.demo_project.project_id
-  disable_on_destroy = true
-  disable_dependent_services = true
-   depends_on = [google_project_service.demo_api_services2]
-  }
-
-    # Enable the Individual APIs
-resource "google_project_service" "demo_api_services4" {
-  service = "run.googleapis.com"
-  project            = google_project.demo_project.project_id
-  disable_on_destroy = true
-  disable_dependent_services = true
-   depends_on = [google_project_service.demo_api_services3]
-  }
-
-    # Enable the Individual APIs
-resource "google_project_service" "demo_api_services5" {
-  service = "logging.googleapis.com"
-  project            = google_project.demo_project.project_id
-  disable_on_destroy = true
-  disable_dependent_services = true
-   depends_on = [google_project_service.demo_api_services4]
-  }
-
-  resource "google_project_service" "demo_api_services6" {
-  service = "osconfig.googleapis.com"
-  project            = google_project.demo_project.project_id
-  disable_on_destroy = true
-  disable_dependent_services = true
-   depends_on = [google_project_service.demo_api_services5]
-  }
-
-    resource "google_project_service" "demo_api_services7" {
-  service = "cloudbuild.googleapis.com"
-  project            = google_project.demo_project.project_id
-  disable_on_destroy = true
-  disable_dependent_services = true
-   depends_on = [google_project_service.demo_api_services6]
-  }
-
-
-
-# Enable the necessary API services
-resource "google_project_service" "api_service" {
-  for_each = toset([
-    "sqladmin.googleapis.com",
-    "servicenetworking.googleapis.com",
-#    "logging.googleapis.com",
-    "secretmanager.googleapis.com",
-    "iap.googleapis.com",
-    "cloudkms.googleapis.com",
-    "iam.googleapis.com",
-#    "osconfig.googleapis.com",
-#    "containeranalysis.googleapis.com",
-    "cloudapis.googleapis.com",
-    "vpcaccess.googleapis.com",
-#    "cloudbuild.googleapis.com",
-    "sql-component.googleapis.com",
-    "storage.googleapis.com",
-#    "run.googleapis.com",
-#    "redis.googleapis.com",   
-#    "compute.googleapis.com",
-  ])
-
-  service = each.key
-
-    project                       = google_project.demo_project.project_id
-    disable_on_destroy            = true
-    disable_dependent_services    = true
-   depends_on = [google_project_service.demo_api_services7]
-} */
 
 
 module "project_services_core" {
@@ -266,20 +172,6 @@ module "dlp_deploy" {
 }
 
 
- 
-/*  module "vpc_sc_deploy" {
-    source = "./vpcsc-module"
-    folder_id                       = google_folder.terraform_solution.name
-    demo_project_id                 = var.demo_project_id
-    organization_id                 = var.organization_id
-    network_region                  = var.network_region
-    network_zone                    = var. network_zone
-    create_default_access_policy    = false
-    random_string                   = random_string.id.result
-    vpcsctag                        = "vpc-sc2-"
-    billing_account                 = var.billing_account
-    proxy_access_identities         = var.proxy_access_identities
-}  */
 
 
 

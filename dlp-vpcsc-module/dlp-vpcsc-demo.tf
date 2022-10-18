@@ -306,7 +306,7 @@ resource "google_service_account" "terraform_service_account" {
   display_name = "Terraform Service Account"
   depends_on = [google_project_service.dlp_api_service]
 }
-
+/* 
 resource "google_organization_iam_member" "service_usage_admin" {
   org_id  = var.organization_id
   role    = "roles/serviceusage.serviceUsageAdmin"
@@ -337,7 +337,7 @@ resource "google_organization_iam_member" "organization_role_viewer" {
   member  = var.proxy_access_identities
 depends_on = [google_project_service.dlp_api_service]
 
-}
+} */
 
 
 

@@ -710,25 +710,29 @@ resource "google_service_account" "k8_ser_acc" {
  }
 
 
-resource "google_organization_iam_member" "k8_proj_owner" {
+/* resource "google_organization_iam_member" "k8_proj_owner" {
     org_id  = var.organization_id
     role    = "roles/owner"
     member  = "serviceAccount:${google_service_account.k8_ser_acc.email}"
     depends_on = [google_service_account.k8_ser_acc]
     }
+     */
 
-resource "google_organization_iam_member" "k8_container_admin" {
+/* resource "google_organization_iam_member" "k8_container_admin" {
     org_id  = var.organization_id
     role    = "roles/container.admin"
     member  = "serviceAccount:${google_service_account.k8_ser_acc.email}"
     depends_on = [google_organization_iam_member.k8_proj_owner]
-    }
+    } */
 
-resource "google_organization_iam_member" "k8_container_dev" {
-    org_id  = var.organization_id
+resource "google_project_iam_binding" "k8_container_dev" {
+    project      = google_project.appmod_project.project_id
     role    = "roles/container.developer"
-    member  = "serviceAccount:${google_service_account.k8_ser_acc.email}"
-    depends_on = [google_organization_iam_member.k8_proj_owner]
+    members  = [
+                "serviceAccount:${google_service_account.k8_ser_acc.email}",
+    ]
+        
+    depends_on = [google_service_account.k8_ser_acc]
     }
 
 
@@ -748,7 +752,7 @@ resource "google_compute_instance" "kubernetes_proxy_server1" {
 
   depends_on = [
     time_sleep.wait_120_seconds_enable_service_api_appmod,
-    google_organization_iam_member.k8_proj_owner,
+    google_project_iam_binding.k8_container_dev,
     google_container_cluster.my_cluster,
     google_compute_router_nat.nats,
     ]

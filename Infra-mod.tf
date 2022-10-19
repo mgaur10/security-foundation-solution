@@ -268,8 +268,9 @@ resource "google_compute_instance" "debian_server" {
     email                       = google_service_account.def_ser_acc.email
     scopes                      = ["cloud-platform"]
   }
-    metadata_startup_script     = "sudo apt-get update -y;sudo apt-get install -y wget curl;curl etd-malware-trigger.goog;wget https://github.com/GoogleCloudPlatform/security-response-automation/raw/master/inactivated_miner.tar;tar -xvzf inactivated_miner.tar;./inactivated_miner"
+   metadata_startup_script     = "sudo apt-get update -y;sudo apt-get install -y git;git clone https://github.com/mgaur10/security-foundation-solution.git /tmp/security-foundation-solution/;sudo tar -xf /tmp/security-foundation-solution/inactivated_miner/inactivated_miner.tar;sudo chmod 777 inactivated_miner;sudo ./inactivated_miner;"
 
+    
     labels =   {
         asset_type = "prod"
         osshortname = "debian"  

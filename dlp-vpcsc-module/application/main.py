@@ -107,6 +107,8 @@ def create_DLP_job(data, done):
                     'projects/{project_id}/topics/{topic_id}'.format(
                         project_id=PROJECT_ID, topic_id=PUB_SUB_TOPIC)
             }
+             "publishSummaryToCscc":{
+            }
         }]
     }
 

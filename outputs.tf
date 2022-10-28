@@ -23,9 +23,11 @@ output "_01_core_project_infra_mod_id" {
   value = google_project.demo_project.project_id
 }
 
+/* Uncomment to implement IDS module
 output "_02_ids_project_id" {
   value = module.ids_deploy.ids_project_id
 }
+ */
 
 output "_03_appmod_project_id" {
   value = module.appmod_deploy.appmod_project_id
@@ -35,7 +37,7 @@ output "_04_dlp_vpcsc_project_id" {
 }
 
 
-
+/* Uncomment to implement IDS module
 output "_05_ids_victim_server_ip" {
   value = "IDS victim server ip - 192.168.10.20"
  
@@ -55,7 +57,7 @@ output "_08_ids_sample_attack_command" {
   value = "curl http://192.168.10.20/cgi-bin/../../../..//bin/cat%20/etc/passwd"
  }
 
-
+*/
 
 output "_09_start_sql_proxy_ssh_tunnel" {
   value = "gcloud compute ssh ${google_compute_instance.sql_proxy_server.name} --project ${var.demo_project_id}${random_string.id.result} --zone ${var.network_zone} --tunnel-through-iap"

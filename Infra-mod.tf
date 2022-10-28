@@ -116,6 +116,7 @@ resource "time_sleep" "wait_120_seconds_enable_service_api" {
     destroy_duration    = "120s"
 }
 
+/* Remove the comments to implement IDS module
 module "ids_deploy" {
     source                  = "./ids-module"
     folder_id               = google_folder.terraform_solution.name
@@ -129,7 +130,7 @@ module "ids_deploy" {
     proxy_access_identities = var.proxy_access_identities
 }
 
-
+*/
 
 module "appmod_deploy" {
     source                      = "./appmod-module"

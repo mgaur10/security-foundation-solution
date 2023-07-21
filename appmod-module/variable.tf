@@ -73,7 +73,7 @@ variable proxy_access_identities {
 variable "name" {
 type        = string
 description = "Name given to the new GKE cluster"
-default     = "online-boutique2"
+default     = "ktd-test-online-boutique2"
 }
 
 variable "namespace" {

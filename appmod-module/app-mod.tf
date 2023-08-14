@@ -47,7 +47,7 @@ module "project_services" {
     "secretmanager.googleapis.com",
     "run.googleapis.com",
     "redis.googleapis.com",
-    "clouddebugger.googleapis.com",
+   # "clouddebugger.googleapis.com",
     "cloudprofiler.googleapis.com",
     "cloudbuild.googleapis.com",
     "binaryauthorization.googleapis.com",
